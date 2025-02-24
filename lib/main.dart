@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Pokedex',
       theme: ThemeData(
         primarySwatch: Colors.red,
-        scaffoldBackgroundColor: Colors.grey[200], // Fondo gris
+        scaffoldBackgroundColor: Colors.grey[200],
       ),
       home: const PokemonList(),
     );
@@ -28,6 +28,7 @@ class PokemonList extends StatefulWidget {
   const PokemonList({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _PokemonListState createState() => _PokemonListState();
 }
 
@@ -35,6 +36,7 @@ class _PokemonListState extends State<PokemonList> {
   TextEditingController searchController = TextEditingController();
   List<Map<String, dynamic>> allPokemon = [];
   List<Map<String, dynamic>> filteredPokemon = [];
+  bool isLoading = true; // Boolean to control the loading state
 
   @override
   void initState() {
@@ -45,16 +47,17 @@ class _PokemonListState extends State<PokemonList> {
     });
   }
 
-  // Cargar Pokémon desde la API
+  // Load Pokémon from the API
   void loadPokemon() async {
     List<Map<String, dynamic>> data = await ApiService.getGen1Pokemon();
     setState(() {
       allPokemon = data;
       filteredPokemon = allPokemon;
+      isLoading = false; // When loading is complete, disable the loading state
     });
   }
 
-  // Filtrar Pokémon en tiempo real
+  // Filter Pokémon in real-time
   void filterPokemon() {
     String query = searchController.text.toLowerCase();
     setState(() {
@@ -89,7 +92,21 @@ class _PokemonListState extends State<PokemonList> {
           ],
         ),
       ),
-      body: Column(
+      body: isLoading
+        ? Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(color: Colors.red),
+                const SizedBox(height: 20),
+                const Text(
+                  "Espere mientras obtenemos los Pokémon...",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+          )
+        : Column(
         children: [
           Container(
             padding: EdgeInsets.all(10),
@@ -103,7 +120,7 @@ class _PokemonListState extends State<PokemonList> {
               textAlign: TextAlign.center,
             ),
           ),
-          // Barra de búsqueda
+          // Search bar
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
@@ -114,13 +131,13 @@ class _PokemonListState extends State<PokemonList> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                filled: true, // Activa el fondo
-                fillColor: Colors.white, // Color blanco
+                filled: true,
+                fillColor: Colors.white,
               ),
             ),
           ),
 
-          // Lista de Pokémon en Grid
+          // Pokémon list in a grid
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(8.0),
@@ -191,7 +208,7 @@ class _PokemonListState extends State<PokemonList> {
           ),
         ],
       ),
-      bottomNavigationBar: Container( // Aquí va el footer
+      bottomNavigationBar: Container( // The footer goes here
         padding: const EdgeInsets.all(12.0),
         color: Colors.white,
         child: const Text(

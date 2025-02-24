@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PokemonDetails extends StatelessWidget {
   final Map<String, dynamic> pokemon;
@@ -8,14 +7,14 @@ class PokemonDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Extraer el color del tipo primario del Pokémon
+    // Extract the primary type color of the Pokémon
     Color primaryColor = getPokemonColor(pokemon['types'][0]['type']['name']);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, // Separa los elementos
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               pokemon['name'].toUpperCase(),
@@ -30,7 +29,7 @@ class PokemonDetails extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.grey, // Color gris para el ID
+                color: Colors.grey,
               ),
             ),
           ],
@@ -42,9 +41,9 @@ class PokemonDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 80),
-            // Card con el fondo del color primario del Pokémon
+            // Card with the background of the Pokémon's primary color
             Stack(
-              clipBehavior: Clip.none, // Permite que la imagen sobresalga
+              clipBehavior: Clip.none, // Allows the image to stand out
               children: [
                 Card(
                   color: primaryColor,
@@ -55,13 +54,13 @@ class PokemonDetails extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: SizedBox(
-                      height: 100, // Ajusta la altura para que la imagen sobresalga
+                      height: 100,
                       width: double.infinity,
                     ),
                   ),
                 ),
                 Positioned(
-                  top: -100, // Ajusta este valor para controlar cuánto sobresale la imagen
+                  top: -100,
                   left: 0,
                   right: 0,
                   child: Center(
@@ -74,7 +73,7 @@ class PokemonDetails extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -124,7 +123,7 @@ class PokemonDetails extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -152,10 +151,10 @@ class PokemonDetails extends StatelessWidget {
                         "special-attack": "Ataque Especial",
                         "special-defense": "Defensa Especial",
                         "speed": "Velocidad"
-                      }[stat['stat']['name']] ?? stat['stat']['name']; // Si no está en el mapa, usa el nombre original
+                      }[stat['stat']['name']] ?? stat['stat']['name']; // If it's not in the map, use the original name
 
                       int baseStat = stat['base_stat'];
-                      double progress = baseStat / 255; // Normalizar el valor (0-255)
+                      double progress = baseStat / 255;
 
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -195,7 +194,7 @@ class PokemonDetails extends StatelessWidget {
     );
   }
 
-  // Función para obtener el color según el tipo de Pokémon
+  // Function to get the color based on the Pokémon type
   Color getPokemonColor(String type) {
     switch (type) {
       case 'fire':

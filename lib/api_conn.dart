@@ -4,9 +4,9 @@ import 'package:http/http.dart' as http;
 class ApiService {
   static const String baseUrl = "https://pokeapi.co/api/v2/";
 
-  // Obtener los primeros 10 Pokémon de la generación 1
+  // Get the first X Pokémon from Generation 1
   static Future<List<Map<String, dynamic>>> getGen1Pokemon() async {
-    final url = Uri.parse('${baseUrl}pokemon?limit=20');
+    final url = Uri.parse('${baseUrl}pokemon?limit=30');
 
     try {
       final response = await http.get(url);
@@ -34,7 +34,7 @@ class ApiService {
     }
   }
 
-  // Obtener detalles de un Pokémon
+  // Get details of a Pokémon
   static Future<Map<String, dynamic>?> getPokemon(String name) async {
     final url = Uri.parse('${baseUrl}pokemon/$name');
 

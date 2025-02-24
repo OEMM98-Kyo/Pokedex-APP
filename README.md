@@ -1,16 +1,21 @@
-# pokedex_app
 
-A new Flutter project.
+# Una app en Flutter que muestra Pokémon de la Generación 1 usando la PokeAPI.
 
-## Getting Started
+Requisitos
 
-This project is a starting point for a Flutter application.
+# Flutter instalado (Instrucciones)
+# Emulador o dispositivo físico
 
-A few resources to get you started if this is your first Flutter project:
+Instalación
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# Clona el repositorio: git clone https://github.com/OEMM98-Kyo/Pokedex-APP.git
+# Entra al proyecto: cd pokedex_app
+# Instala las dependencias: flutter pub get
+# Ejecuta la aplicación: flutter run
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Estructura
+
+# main.dart → Pantalla principal
+# api_conn.dart → Conexión con la API
+# pokemon_details.dart → Detalles de cada Pokémon
+
