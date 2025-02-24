@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'api_conn.dart';
+import 'pokemon_details.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -110,8 +112,7 @@ class _PokemonListState extends State<PokemonList> {
                 hintText: 'Buscar Pokémon...',
                 prefixIcon: const Icon(Icons.search, color: Colors.amber,),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  borderSide: BorderSide.none, // Remueve el borde
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 filled: true, // Activa el fondo
                 fillColor: Colors.white, // Color blanco
@@ -132,55 +133,75 @@ class _PokemonListState extends State<PokemonList> {
               itemBuilder: (context, index) {
                 final pokemon = filteredPokemon[index];
 
-                return Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Stack(
-                    children: [
-                      // Centrar imagen y nombre
-                      Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.network(
-                              pokemon['sprites']['other']['home']['front_default'],
-                              height: 100,
-                              width: 100,
-                            ),
-                            Text(
-                              pokemon['name'].toUpperCase(),
-                              style: TextStyle(
-                                color: Colors.indigo,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PokemonDetails(pokemon: pokemon),
                       ),
-                      
-                      // ID en la esquina superior derecha
-                      Positioned(
-                        top: 15,
-                        right: 15,
-                        child: Text(
-                          "#${pokemon['id'].toString().padLeft(3, '0')}",
-                          style: TextStyle(
-                            color: Colors.grey.shade700,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                    );
+                  },
+                  child: Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.network(
+                                pokemon['sprites']['other']['home']['front_default'],
+                                height: 100,
+                                width: 100,
+                              ),
+                              Text(
+                                pokemon['name'].toUpperCase(),
+                                style: TextStyle(
+                                  color: Colors.indigo,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    ],
+                        Positioned(
+                          top: 15,
+                          right: 15,
+                          child: Text(
+                            "#${pokemon['id'].toString().padLeft(3, '0')}",
+                            style: TextStyle(
+                              color: Colors.grey.shade700,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
+
               },
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: Container( // Aquí va el footer
+        padding: const EdgeInsets.all(12.0),
+        color: Colors.white,
+        child: const Text(
+          "© 2025 Pokedex App - Oscar E. Mejia",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey,
+          ),
+        ),
       ),
     );
   }
